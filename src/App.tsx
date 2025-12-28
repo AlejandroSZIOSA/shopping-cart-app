@@ -7,7 +7,7 @@ import { Order } from "./pages/Order/Order";
 
 function App() {
   const router = createBrowserRouter([
-    { path: "/", element: <Home /> },
+    { path: "/", index: true, element: <Home /> },
     { path: "/details/:id", element: <Details /> },
     { path: "/order", element: <Order /> },
   ]);

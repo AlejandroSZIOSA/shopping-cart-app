@@ -1,36 +1,47 @@
 import { useState, type FC } from "react";
-import { ProductCard } from "../../components/ProductCard/ProductCard";
 import { type Product } from "../../types/shared";
 import { Header } from "../../components/Header/Header";
+import { useCartContext } from "../../components/hooks/useCartContext";
+import { CartShowing } from "../../components/CartShowing/CartShowing";
+import { List } from "../../components/List/List";
 
 const initialProducts: Product[] = [
-  { id: 1, title: "Product 1" },
-  { id: 2, title: "Product 2" },
-  { id: 3, title: "Product 3" },
+  { id: 1, name: "Product 1" },
+  { id: 2, name: "Product 2" },
+  { id: 3, name: "Product 3" },
 ];
 
 export const Home: FC = () => {
-  const [counter, setCounter] = useState(0);
   const [products, setProducts] = useState<Product[]>(initialProducts);
-  const [shoppingCart, setShoppingCart] = useState<Product[]>([]);
+
+  const { cart_, addProduct_Fn } = useCartContext();
+
+  const [openCart, setOpenCart] = useState(false);
 
   const handleAddToCart = (product: Product) => {
-    setShoppingCart([...shoppingCart, product]);
+    addProduct_Fn(product);
   };
 
+  /* console.log(cart_); */
   return (
     <>
-      <Header subText="List Products">
-        <button>Counter: {shoppingCart.length}</button>
+      <Header subText={openCart ? "Your Cart" : "Product List"}>
+        <button onClick={() => setOpenCart(!openCart)}>
+          Cart: {cart_?.length}
+        </button>
       </Header>
       <main>
-        <ol>
-          {products.map((product) => (
-            <li key={product.id}>
-              <ProductCard product={product} />
-            </li>
-          ))}
-        </ol>
+        {openCart ? (
+          <CartShowing onClose={() => setOpenCart(false)} />
+        ) : (
+          <div>
+            <List
+              list={products}
+              variant="show-stack"
+              onAdd={handleAddToCart}
+            />
+          </div>
+        )}
       </main>
     </>
   );
