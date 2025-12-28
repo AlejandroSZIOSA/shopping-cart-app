@@ -1,31 +1,12 @@
 import { createContext, type ReactNode, useReducer } from "react";
 import type { Product } from "../types/shared";
+import type {
+  CartContextType,
+  ADD_PRODUCT,
+  REMOVE_PRODUCT,
+  UPDATE_PRODUCT,
+} from "./AppProviders.types";
 
-interface CartContextType {
-  cart_: Product[] | null;
-  addProduct_Fn: (p: Product) => void;
-  removeProduct_Fn: (id: number) => void;
-  updateProduct_Fn: (id: number, updatedProduct: Product) => void;
-}
-
-//discriminant types
-type ADD_PRODUCT = {
-  type: "ADD_PRODUCT";
-  payload: Product;
-};
-
-type REMOVE_PRODUCT = {
-  type: "REMOVE_PRODUCT";
-  payload: number;
-};
-
-type UPDATE_PRODUCT = {
-  type: "UPDATE_PRODUCT";
-  payload: {
-    id: number;
-    updatedProduct: Product;
-  };
-};
 type Action = ADD_PRODUCT | REMOVE_PRODUCT | UPDATE_PRODUCT; // discriminant onion
 
 const CART_INITIAL_STATE: Product[] = [];
