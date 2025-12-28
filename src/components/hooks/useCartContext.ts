@@ -1,6 +1,7 @@
 import { useContext } from "react";
-import { CartContext } from "../../context/AppProviders";
+import { CartContext } from "../../context/CartContext";
 
+//4-Context Hook
 export const useCartContext = () => {
   const context = useContext(CartContext);
   if (!context)
