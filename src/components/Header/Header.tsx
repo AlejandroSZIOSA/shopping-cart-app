@@ -8,7 +8,14 @@ interface HeaderProps {
 export const Header: FC<HeaderProps> = ({ subText, children }) => {
   return (
     <header>
-      <div>
+      <div
+        style={{
+          display: "flex",
+          gap: "10px",
+          justifyContent: "space-evenly",
+          padding: "10px",
+        }}
+      >
         <h1>Shopping Cart</h1>
         {children}
       </div>

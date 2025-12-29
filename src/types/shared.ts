@@ -1,11 +1,11 @@
 export interface Product {
   id: number;
   name: string;
-  price?: number;
+  item_price: number;
   description?: string;
   images?: string[];
-  qty?: number;
-  totalPrice?: number;
+  qty: number;
+  item_total: number;
 }
 
 export interface Order {

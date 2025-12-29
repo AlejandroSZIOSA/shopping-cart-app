@@ -2,10 +2,10 @@ import { type FC } from "react";
 import { Link, useParams } from "react-router-dom";
 import { Header } from "../../components/Header/Header";
 
-export const Details: FC = () => {
+export const DetailsPage: FC = () => {
   const { id } = useParams<{ id: string }>();
 
-  console.log(id);
+  /* console.log(id); */
   return (
     <>
       <Header subText="Details">

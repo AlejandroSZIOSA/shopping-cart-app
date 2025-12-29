@@ -1,15 +1,14 @@
 import "./App.css";
-
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { Home } from "./pages/Home/Home";
-import { Details } from "./pages/Details/Details";
-import { Order } from "./pages/Order/Order";
+import { HomePage } from "./pages/Home/Home";
+import { DetailsPage } from "./pages/Details/Details";
+import { CheckoutPage } from "./pages/Checkout/Checkout";
 
 function App() {
   const router = createBrowserRouter([
-    { path: "/", index: true, element: <Home /> },
-    { path: "/details/:id", element: <Details /> },
-    { path: "/order", element: <Order /> },
+    { path: "/", index: true, element: <HomePage /> },
+    { path: "/details/:id", element: <DetailsPage /> },
+    { path: "/checkout", element: <CheckoutPage /> },
   ]);
   return <RouterProvider router={router}></RouterProvider>;
 }

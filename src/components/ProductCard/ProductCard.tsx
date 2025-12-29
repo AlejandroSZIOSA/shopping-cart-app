@@ -4,17 +4,18 @@ import { Link } from "react-router-dom";
 
 interface CardProps {
   product: Product;
-  onAdd?: (product: Product) => void;
+  onAdd: (product: Product) => void;
 }
 
 export const ProductCard: FC<CardProps> = ({ product, onAdd }) => {
-  const { name } = product;
+  const { name, item_price } = product;
 
   return (
     <div>
-      <h2>p{name}</h2>
+      <p>{name}</p>
+      <p>item_price = {item_price}</p>
       <Link to={`/details/${product.id}`}>Details</Link>
-      <button onClick={() => onAdd?.(product)}>Add to Cart</button>
+      <button onClick={() => onAdd(product)}>Add to Cart</button>
     </div>
   );
 };
