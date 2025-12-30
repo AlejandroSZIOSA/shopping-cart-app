@@ -10,7 +10,6 @@ interface CartShowingProps {
 
 export const CartShowing: FC<CartShowingProps> = ({ onClose }) => {
   const navigate = useNavigate();
-
   const { cart_, removeProduct_Fn } = useCartContext();
 
   const handleRemoveFromCart = (id: number) => {

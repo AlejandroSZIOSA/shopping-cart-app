@@ -38,7 +38,8 @@ export const CheckoutPage: FC = () => {
           <label>Phone</label>
           <input type="tel" placeholder="Phone" />
           <br></br>
-          <button type="submit">Submit</button>
+          <p>Total Price: {totalPrice}</p>
+          <button type="submit">Submit Order</button>
         </form>
       </main>
     </>
