@@ -9,7 +9,7 @@ interface CardProps {
 }
 
 export const ProductCard: FC<CardProps> = ({ product, onAdd }) => {
-  const { id, name, item_price } = product;
+  const { id, name, price } = product;
   const { cart_ } = useCartContext();
 
   // Check if the item is already in the cart
@@ -18,7 +18,7 @@ export const ProductCard: FC<CardProps> = ({ product, onAdd }) => {
   return (
     <div>
       <p>{name}</p>
-      <p>item_price = {item_price}</p>
+      <p>price = {price}</p>
       <Link to={`/details/${product.id}`}>Details</Link>
       <button
         disabled={itemInCart ? true : false}

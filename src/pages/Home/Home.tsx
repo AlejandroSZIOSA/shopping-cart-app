@@ -6,9 +6,9 @@ import { CartShowing } from "../../components/CartShowing/CartShowing";
 import { List } from "../../components/List/List";
 
 const initialProducts: Product[] = [
-  { id: 1, name: "Product 1", item_price: 10, qty: 0, item_total: 10 },
-  { id: 2, name: "Product 2", item_price: 20, qty: 0, item_total: 20 },
-  { id: 3, name: "Product 3", item_price: 30, qty: 0, item_total: 30 },
+  { id: 1, name: "Product 1", price: 10, qty: 0, item_total: 10 },
+  { id: 2, name: "Product 2", price: 20, qty: 0, item_total: 20 },
+  { id: 3, name: "Product 3", price: 30, qty: 0, item_total: 30 },
 ];
 
 export const HomePage: FC = () => {

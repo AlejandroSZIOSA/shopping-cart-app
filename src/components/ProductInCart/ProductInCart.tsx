@@ -8,7 +8,7 @@ interface ItemCartProps {
 }
 
 export const ProductInCart: FC<ItemCartProps> = ({ product, onRemove }) => {
-  const { id, name, item_price, qty } = product;
+  const { id, name, price, qty } = product;
   const { updateProduct_Fn } = useCartContext();
 
   const onIncreaseQty = () => {
@@ -16,7 +16,7 @@ export const ProductInCart: FC<ItemCartProps> = ({ product, onRemove }) => {
     const newProduct = {
       ...product,
       qty: newQty,
-      item_total: (item_price ?? 0) * newQty,
+      item_total: (price ?? 0) * newQty,
     };
     updateProduct_Fn(id, newProduct);
   };
@@ -27,7 +27,7 @@ export const ProductInCart: FC<ItemCartProps> = ({ product, onRemove }) => {
       const newProduct = {
         ...product,
         qty: newQty,
-        item_total: (item_price ?? 0) * newQty,
+        item_total: (price ?? 0) * newQty,
       };
       updateProduct_Fn(id, newProduct);
     } else {
