@@ -16,17 +16,6 @@ export const ProductCard: FC<CardProps> = ({ product, onAdd }) => {
   // Check if the item is already in the cart
   const itemInCart = cart_?.find((item) => item.id === id);
 
-  function createProductInCart() {
-    const newProduct: Product = {
-      id: id,
-      name: name,
-      price: price,
-      qty: 0,
-      item_total: price,
-    };
-    return newProduct;
-  }
-
   return (
     <div>
       <p>{name}</p>
@@ -34,7 +23,7 @@ export const ProductCard: FC<CardProps> = ({ product, onAdd }) => {
       <Link to={`/details/${id}`}>Details</Link>
       <button
         disabled={itemInCart ? true : false}
-        onClick={() => onAdd(createProductInCart())}
+        onClick={() => onAdd(product as Product)}
       >
         Add to Cart
       </button>
