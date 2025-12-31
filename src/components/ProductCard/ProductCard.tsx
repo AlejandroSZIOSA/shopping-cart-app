@@ -2,6 +2,7 @@ import { type FC } from "react";
 import { type Product } from "../../types/shared";
 import { Link } from "react-router-dom";
 import { useCartContext } from "../hooks/useCartContext";
+import type { ProductPayload } from "../../services/API.types";
 
 interface CardProps {
   product: Product;
