@@ -16,7 +16,7 @@ export const Header: FC<HeaderProps> = ({ subText, children }) => {
           padding: "10px",
         }}
       >
-        <h1>Shopping Cart</h1>
+        <h1>Shopping Cart App</h1>
         {children}
       </div>
       <h3>{subText}</h3>
