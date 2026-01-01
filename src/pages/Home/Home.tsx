@@ -31,11 +31,11 @@ export const HomePage: FC = () => {
     // reset initial state
     /*  setIsLoading(true); */
 
-    const dataReq = await ProductsAPI.getProducts();
+    const dataRes = await ProductsAPI.getProducts();
     /* setIsLoading(false); */
 
     /*     console.log(data.data);
-     */ setProducts(dataReq.data);
+     */ setProducts(dataRes.data as ProductPayload[]);
   };
 
   useEffect(() => {

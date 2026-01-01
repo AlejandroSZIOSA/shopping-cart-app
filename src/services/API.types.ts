@@ -6,20 +6,20 @@ export interface ProductPayload {
   images?: string[];
 }
 
-export interface DataReq {
+export interface Data {
   status: string;
-  data: ProductPayload[];
+  data: ProductPayload[] | ProductPayload;
 }
 
 // New types for orders
-export interface ProductOrder {
+export interface ProductOrderPayload {
   product_id: number;
   name: string;
   item_price: number;
   item_total: number;
 }
 
-export interface UserOrder {
+export interface UserOrderPayload {
   customer_first_name: string;
   customer_last_name: string;
   customer_address: string;
@@ -28,7 +28,7 @@ export interface UserOrder {
   customer_email: string;
   customer_phone: string;
   order_total: number;
-  order_items: ProductOrder[];
+  order_items: ProductOrderPayload[];
 }
 
 /* export type CreateTodoPayload = Omit<Product, "id">;

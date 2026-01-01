@@ -1,7 +1,7 @@
 import axios from "axios";
 
 import { VITE_BASE_URL as BASE_URL } from "../utils/constants";
-import { type DataReq } from "./API.types";
+import { type Data } from "./API.types";
 
 // Create a new axios instance
 const instance = axios.create({
@@ -23,5 +23,9 @@ export const get = async <T>(endpoint: string) => {
 };
 
 export const getProducts = async () => {
-  return get<DataReq>("/products");
+  return get<Data>("/products");
+};
+
+export const getProduct = async (id: number) => {
+  return get<Data>("/products/" + id); // "http://localhost:3000/products/42"
 };
