@@ -1,15 +1,4 @@
-//form validation logic
-export type FormValues = {
-  name: string;
-  lastName: string;
-  address: string;
-  post: string;
-  city: string;
-  email: string;
-  phone: string;
-};
-
-export type Errors = Partial<Record<keyof FormValues, string>>;
+import type { FormValues, Errors } from "../types/shared";
 
 const fields: (keyof FormValues)[] = [
   "name",
@@ -24,14 +13,22 @@ const fields: (keyof FormValues)[] = [
 export const validate = (values: FormValues): Errors =>
   fields.reduce((errors, field) => {
     if (field === "phone") {
-      if (values[field].length >= 2) {
-        errors[field] = "Max 2 characters";
+      if (values[field].length >= 255) {
+        errors[field] = "Max 255 characters";
       }
       return errors; // Skip phone validation
     }
 
-    if (values[field].length >= 2 || !values[field]) {
-      errors[field] = "Max 20 characters";
+    if (field === "post") {
+      const postRegex = /^\d{6}$/;
+      if (!postRegex.test(values[field])) {
+        errors[field] = "Post code must be 6 digits";
+      }
+      return errors;
+    }
+
+    if (values[field].length >= 255 || !values[field]) {
+      errors[field] = "Max 255 characters";
     }
 
     if (field == "email") {
