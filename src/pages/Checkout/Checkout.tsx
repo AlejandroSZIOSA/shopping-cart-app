@@ -1,10 +1,23 @@
-import { type FC, useRef, type FormEvent } from "react";
+import { type FC, type FormEvent, type ChangeEvent, useState } from "react";
 import { Header } from "../../components/Header/Header";
 import { useNavigate } from "react-router-dom";
 import { useCartContext } from "../../components/hooks/useCartContext";
 
+import type { FormValues, Errors } from "../../utils/calculations";
+import { validate } from "../../utils/calculations";
+
 export const CheckoutPage: FC = () => {
-  const refNameInput = useRef<HTMLInputElement>(null);
+  const [values, setValues] = useState<FormValues>({
+    name: "",
+    lastName: "",
+    address: "",
+    post: "",
+    city: "",
+    email: "",
+    phone: "",
+  });
+
+  const [errors, setErrors] = useState<Errors>({});
 
   const navigate = useNavigate();
   const { cart_ } = useCartContext();
@@ -12,45 +25,102 @@ export const CheckoutPage: FC = () => {
   const totalPrice =
     cart_?.reduce((acc, product) => acc + (product.item_total ?? 0), 0) ?? 0;
 
-  function validateForm(event: FormEvent) {
-    event.preventDefault();
-    console.log(refNameInput.current?.value);
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setValues((prev) => ({ ...prev, [name]: value }));
+  };
 
-    /* if (refNameInput.current?.value.length > 255) {
-      setError("First name is too long");
-    } */
-  }
+  const handleSubmit = (e: FormEvent) => {
+    e.preventDefault();
+
+    const validationErrors = validate(values);
+    setErrors(validationErrors);
+
+    if (Object.keys(validationErrors).length === 0) {
+      console.log("Valid form", values);
+    }
+  };
+
   return (
     <>
       <Header subText="Checkout">
         <button onClick={() => navigate("..")}>Back</button>
       </Header>
       <main>
-        <form onSubmit={validateForm}>
+        <form onSubmit={handleSubmit}>
           <label>Name</label>
-          <input ref={refNameInput} type="text" placeholder="Name" />
+          <input
+            type="text"
+            placeholder="Name"
+            name="name"
+            value={values.name}
+            onChange={handleChange}
+          />
+          {errors.name && <p>{errors.name}</p>}
           <br></br>
           <label>Last Name</label>
-          <input type="text" placeholder="Last Name" />
+          <input
+            type="text"
+            placeholder="last Name"
+            name="lastName"
+            value={values.lastName}
+            onChange={handleChange}
+          />
+          {errors.lastName && <p>{errors.lastName}</p>}
           <br></br>
           <label>Address</label>
-          <input type="text" placeholder="Address" />
+          <input
+            type="text"
+            placeholder="Address"
+            name="address"
+            value={values.address}
+            onChange={handleChange}
+          />
+          {errors.address && <p>{errors.address}</p>}
           <br></br>
           <label>Post</label>
-          <input type="text" placeholder="Post" />
+          <input
+            type="text"
+            placeholder="Post"
+            name="post"
+            value={values.post}
+            onChange={handleChange}
+          />
+          {errors.post && <p>{errors.post}</p>}
           <br></br>
           <label>City</label>
-          <input type="text" placeholder="City" />
+          <input
+            type="text"
+            placeholder="City"
+            name="city"
+            value={values.city}
+            onChange={handleChange}
+          />
+          {errors.city && <p>{errors.city}</p>}
           <br></br>
           <label>Email</label>
-          <input type="email" placeholder="Email" />
+          <input
+            type="text"
+            placeholder="Email"
+            name="email"
+            value={values.email}
+            onChange={handleChange}
+          />
+          {errors.email && <p>{errors.email}</p>}
           <br></br>
           <label>Phone</label>
-          <input type="tel" placeholder="Phone" />
+          <input
+            placeholder="Phone"
+            name="phone"
+            value={values.phone}
+            onChange={handleChange}
+          />
+          {errors.phone && <p>{errors.phone}</p>}
           <br></br>
           <p>Total Price: {totalPrice}</p>
           <button type="submit">Submit Order</button>
         </form>
+        <div></div>
       </main>
     </>
   );
