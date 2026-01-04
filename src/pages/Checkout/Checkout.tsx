@@ -24,6 +24,8 @@ export const CheckoutPage: FC = () => {
     phone: "",
   });
   const [errors, setErrors] = useState<Errors>({});
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState<string>("");
 
   const totalPrice =
     cart_?.reduce((acc, product) => acc + (product.item_total ?? 0), 0) ?? 0;
@@ -66,23 +68,40 @@ export const CheckoutPage: FC = () => {
   };
 
   const handleCreateOrder = async (newOrder: UserOrderPayload) => {
-    await TodosAPI.createOrder(newOrder);
-    console.log("Order created successfully:", newOrder);
+    try {
+      setIsLoading(true);
+      await TodosAPI.createOrder(newOrder);
+      console.log("Order created successfully:", newOrder);
+      setIsLoading(false);
+    } catch (error) {
+      if (error instanceof Error) {
+        console.log(error.message);
+      } else {
+        console.log("An unknown error occurred");
+      }
+      setIsLoading(false);
+    }
   };
 
   return (
     <>
       <Header subText="Checkout">
-        <button onClick={() => navigate("..")}>Back</button>
+        <button onClick={() => navigate("..")}>Home</button>
       </Header>
       <main>
-        <UserForm
-          onSubmit={handleSubmit}
-          onChange={handleChange}
-          values={values}
-          errors={errors}
-        />
-        <p>Total Price: {totalPrice}</p>
+        {isLoading || errorMessage ? (
+          <p>Loading...</p>
+        ) : (
+          <>
+            <UserForm
+              onSubmit={handleSubmit}
+              onChange={handleChange}
+              values={values}
+              errors={errors}
+            />
+            <p>Total Price: {totalPrice}</p>
+          </>
+        )}
       </main>
     </>
   );

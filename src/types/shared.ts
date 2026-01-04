@@ -1,5 +1,5 @@
-//Context Type definitions used across the app
-export interface Product {
+//Context Type definitions
+export interface ProductCtx {
   id: number;
   name: string;
   price: number;

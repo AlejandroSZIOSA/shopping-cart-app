@@ -39,7 +39,7 @@ export const getProducts = async () => {
 };
 
 export const getProduct = async (id: number) => {
-  return get<Data>("/products/" + id); // "http://localhost:3000/products/42"
+  return get<Data>("/products/" + id);
 };
 
 export const createOrder = async (payload: UserOrderPayload) => {

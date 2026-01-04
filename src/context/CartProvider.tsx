@@ -1,10 +1,10 @@
 import { type ReactNode, useReducer } from "react";
 import { CartContext } from "./CartContext";
 import { type CartContextType } from "./CartContext";
-import type { Product } from "../types/shared";
+import type { ProductCtx } from "../types/shared";
 import { cartReducer } from "./AppReducers";
 
-const CART_INITIAL_STATE: Product[] = [];
+const CART_INITIAL_STATE: ProductCtx[] = [];
 
 //3-Context Provider
 export const CartProvider = ({ children }: { children: ReactNode }) => {

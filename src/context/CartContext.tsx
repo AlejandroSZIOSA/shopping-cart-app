@@ -1,11 +1,11 @@
 import { createContext } from "react";
-import { type Product } from "../types/shared";
+import { type ProductCtx } from "../types/shared";
 
 export interface CartContextType {
-  cart_: Product[] | null;
-  addProduct_Fn: (p: Product) => void;
+  cart_: ProductCtx[] | null;
+  addProduct_Fn: (p: ProductCtx) => void;
   removeProduct_Fn: (id: number) => void;
-  updateProduct_Fn: (id: number, updatedProduct: Product) => void;
+  updateProduct_Fn: (id: number, updatedProduct: ProductCtx) => void;
 }
 
 //2-Context

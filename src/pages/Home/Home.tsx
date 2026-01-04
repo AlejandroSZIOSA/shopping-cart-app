@@ -1,5 +1,5 @@
 import { useEffect, useState, type FC } from "react";
-import { type Product } from "../../types/shared";
+import { type ProductCtx } from "../../types/shared";
 import { Header } from "../../components/Header/Header";
 import { useCartContext } from "../../components/hooks/useCartContext";
 import { CartShowing } from "../../components/CartShowing/CartShowing";
@@ -7,20 +7,14 @@ import { List } from "../../components/List/List";
 
 import * as ProductsAPI from "../../services/API";
 
-import type { ProductPayload } from "../../services/API.types";
-
-/* const initialProducts: Product[] = [
-  { id: 1, name: "Product 1", price: 10, qty: 0, item_total: 10 },
-  { id: 2, name: "Product 2", price: 20, qty: 0, item_total: 20 },
-  { id: 3, name: "Product 3", price: 30, qty: 0, item_total: 30 },
-]; */
+import type { Product } from "../../services/API.types";
 
 const API_KEY = import.meta.env.VITE_API_KEY;
 
 /* type ProductsPayload = Pick<Product, "id" | "name" | "price">[]; */
 
 export const HomePage: FC = () => {
-  const [products, setProducts] = useState<ProductPayload[]>([]);
+  const [products, setProducts] = useState<Product[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   const { cart_, addProduct_Fn } = useCartContext();
@@ -35,7 +29,7 @@ export const HomePage: FC = () => {
     /* setIsLoading(false); */
 
     /*     console.log(data.data);
-     */ setProducts(dataRes.data as ProductPayload[]);
+     */ setProducts(dataRes.data as Product[]);
   };
 
   useEffect(() => {
@@ -45,7 +39,7 @@ export const HomePage: FC = () => {
   /* console.log(API_KEY);
   console.log(VITE_BASE_URL); */
 
-  const handleAddToCart = (product: Product) => {
+  const handleAddToCart = (product: ProductCtx) => {
     product.qty = 1;
     product.item_total = product.price * product.qty;
     addProduct_Fn(product);

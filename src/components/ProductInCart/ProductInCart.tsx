@@ -1,9 +1,9 @@
 import { type FC } from "react";
-import type { Product } from "../../types/shared";
+import type { ProductCtx } from "../../types/shared";
 import { useCartContext } from "../hooks/useCartContext";
 
 interface ItemCartProps {
-  product: Product;
+  product: ProductCtx;
   onRemove: (id: number) => void; //props drilling back to home X2
 }
 

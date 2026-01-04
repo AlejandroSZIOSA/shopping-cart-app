@@ -4,17 +4,17 @@ import { Header } from "../../components/Header/Header";
 import parse from "html-react-parser";
 
 import * as ProductsAPI from "../../services/API";
-import type { ProductPayload } from "../../services/API.types";
+import type { Product } from "../../services/API.types";
 
 export const DetailsPage: FC = () => {
-  const [product, setProduct] = useState<ProductPayload | null>(null);
+  const [product, setProduct] = useState<Product | null>(null);
 
   const { id } = useParams<{ id: string }>();
   let numericId = Number(id);
 
   const getProductDetails = async (id: number) => {
     const res = await ProductsAPI.getProduct(id);
-    setProduct(res.data as ProductPayload);
+    setProduct(res.data as Product);
   };
 
   useEffect(() => {

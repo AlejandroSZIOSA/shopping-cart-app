@@ -1,9 +1,9 @@
-import type { Product } from "../types/shared";
+import type { ProductCtx } from "../types/shared";
 
 // Action Types
 type ADD_PRODUCT = {
   type: "ADD_PRODUCT";
-  payload: Product;
+  payload: ProductCtx;
 };
 type REMOVE_PRODUCT = {
   type: "REMOVE_PRODUCT";
@@ -13,16 +13,16 @@ type UPDATE_PRODUCT = {
   type: "UPDATE_PRODUCT";
   payload: {
     id: number;
-    updatedProduct: Product;
+    updatedProduct: ProductCtx;
   };
 };
 type Action = ADD_PRODUCT | REMOVE_PRODUCT | UPDATE_PRODUCT; // discriminant onion
 
 //1-Context Reducers
 export function cartReducer(
-  state: Product[] | null,
+  state: ProductCtx[] | null,
   action: Action
-): Product[] {
+): ProductCtx[] {
   switch (action.type) {
     case "ADD_PRODUCT":
       return state ? [...state, action.payload] : [action.payload];

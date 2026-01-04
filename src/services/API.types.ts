@@ -1,14 +1,13 @@
-export interface ProductPayload {
-  id: number;
-  name: string;
-  price: number;
+import type { ProductCtx } from "../types/shared";
+
+export interface Product extends Pick<ProductCtx, "id" | "name" | "price"> {
   description?: string;
   images?: string[];
 }
 
 export interface Data {
   status: string;
-  data: ProductPayload[] | ProductPayload;
+  data: Product[] | Product;
 }
 
 // New types for orders
@@ -33,3 +32,11 @@ export interface UserOrderPayload {
 
 /* export type CreateTodoPayload = Omit<Product, "id">;
 export type UpdateTodoPayload = Partial<CreateTodoPayload>; */
+
+export type ResponseData<T> = {
+  status: string;
+  message: string;
+  data: T;
+};
+
+export type productsResponse = ResponseData<Product[]>;
