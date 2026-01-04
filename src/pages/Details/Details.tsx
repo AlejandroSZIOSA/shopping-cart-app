@@ -18,7 +18,6 @@ export const DetailsPage: FC = () => {
   };
 
   useEffect(() => {
-    // console.log(numericId);
     getProductDetails(numericId);
   }, []);
 

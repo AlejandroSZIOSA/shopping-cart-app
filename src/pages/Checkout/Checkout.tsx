@@ -7,7 +7,13 @@ import { UserForm } from "../../components/UserForm/UserForm";
 import type { FormValues, Errors } from "../../types/shared";
 import { validate } from "../../utils/calculations";
 
+import * as TodosAPI from "../../services/API";
+import type { UserOrderPayload } from "../../services/API.types";
+
 export const CheckoutPage: FC = () => {
+  const navigate = useNavigate();
+  const { cart_ } = useCartContext();
+
   const [values, setValues] = useState<FormValues>({
     name: "",
     lastName: "",
@@ -17,11 +23,7 @@ export const CheckoutPage: FC = () => {
     email: "",
     phone: "",
   });
-
   const [errors, setErrors] = useState<Errors>({});
-
-  const navigate = useNavigate();
-  const { cart_ } = useCartContext();
 
   const totalPrice =
     cart_?.reduce((acc, product) => acc + (product.item_total ?? 0), 0) ?? 0;
@@ -33,13 +35,39 @@ export const CheckoutPage: FC = () => {
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-
     const validationErrors = validate(values);
     setErrors(validationErrors);
 
     if (Object.keys(validationErrors).length === 0) {
       console.log("Valid form", values);
+      handleCreateOrder(createOrderData(values));
     }
+  };
+
+  const createOrderData = (orderUserValues: FormValues): UserOrderPayload => {
+    const newOrder: UserOrderPayload = {
+      customer_first_name: orderUserValues.name,
+      customer_last_name: orderUserValues.lastName,
+      customer_address: orderUserValues.address,
+      customer_postcode: orderUserValues.post,
+      customer_city: orderUserValues.city,
+      customer_email: orderUserValues.email,
+      customer_phone: orderUserValues.phone,
+      order_total: totalPrice,
+      order_items:
+        cart_?.map((item) => ({
+          product_id: item.id,
+          name: item.name,
+          item_price: item.price,
+          item_total: item.item_total ?? 0,
+        })) || [],
+    };
+    return newOrder;
+  };
+
+  const handleCreateOrder = async (newOrder: UserOrderPayload) => {
+    await TodosAPI.createOrder(newOrder);
+    console.log("Order created successfully:", newOrder);
   };
 
   return (
