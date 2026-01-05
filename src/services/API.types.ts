@@ -5,12 +5,7 @@ export interface Product extends Pick<ProductCtx, "id" | "name" | "price"> {
   images?: string[];
 }
 
-export interface Data {
-  status: string;
-  data: Product[] | Product;
-}
-
-// New types for orders
+// types for orders
 export interface ProductOrderPayload {
   product_id: number;
   name: string;
@@ -33,10 +28,15 @@ export interface UserOrderPayload {
 /* export type CreateTodoPayload = Omit<Product, "id">;
 export type UpdateTodoPayload = Partial<CreateTodoPayload>; */
 
+//response types
+
 export type ResponseData<T> = {
   status: string;
-  message: string;
+  message?: string;
   data: T;
 };
 
-export type productsResponse = ResponseData<Product[]>;
+export type ProductsResponse = ResponseData<Product[]>;
+export type ProductDetailsResponse = ResponseData<Product>;
+export type CreateOrderResponse = ResponseData<UserOrderPayload>;
+export type ErrorResponse = ResponseData<unknown>;

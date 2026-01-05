@@ -9,10 +9,11 @@ import { validate } from "../../utils/calculations";
 
 import * as TodosAPI from "../../services/API";
 import type { UserOrderPayload } from "../../services/API.types";
+import { Message } from "../../components/Message/Message";
 
 export const CheckoutPage: FC = () => {
   const navigate = useNavigate();
-  const { cart_ } = useCartContext();
+  const { cart_, clearCart_Fn } = useCartContext();
 
   const [values, setValues] = useState<FormValues>({
     name: "",
@@ -26,6 +27,8 @@ export const CheckoutPage: FC = () => {
   const [errors, setErrors] = useState<Errors>({});
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>("");
+  const [orderCreatedSuccess, setOrderCreatedSuccess] =
+    useState<boolean>(false);
 
   const totalPrice =
     cart_?.reduce((acc, product) => acc + (product.item_total ?? 0), 0) ?? 0;
@@ -41,7 +44,7 @@ export const CheckoutPage: FC = () => {
     setErrors(validationErrors);
 
     if (Object.keys(validationErrors).length === 0) {
-      console.log("Valid form", values);
+      console.log("Valid form");
       handleCreateOrder(createOrderData(values));
     }
   };
@@ -61,6 +64,7 @@ export const CheckoutPage: FC = () => {
           product_id: item.id,
           name: item.name,
           item_price: item.price,
+          qty: item.qty ?? 0,
           item_total: item.item_total ?? 0,
         })) || [],
     };
@@ -68,30 +72,45 @@ export const CheckoutPage: FC = () => {
   };
 
   const handleCreateOrder = async (newOrder: UserOrderPayload) => {
-    try {
-      setIsLoading(true);
-      await TodosAPI.createOrder(newOrder);
-      console.log("Order created successfully:", newOrder);
+    setIsLoading(true);
+    const res = await TodosAPI.createOrder(newOrder);
+    if (res.status === "fail") {
       setIsLoading(false);
-    } catch (error) {
-      if (error instanceof Error) {
-        console.log(error.message);
-      } else {
-        console.log("An unknown error occurred");
-      }
-      setIsLoading(false);
+      setErrorMessage(
+        res.message || "Failed to create order. Please try again."
+      );
+      return;
     }
+    setIsLoading(false);
+    setOrderCreatedSuccess(true);
+    console.log(res);
+    console.log("Order created successfully:", newOrder);
   };
 
   return (
     <>
       <Header subText="Checkout">
-        <button onClick={() => navigate("..")}>Home</button>
+        <button
+          onClick={() => {
+            {
+              orderCreatedSuccess && clearCart_Fn();
+            }
+            navigate("..");
+          }}
+        >
+          Home
+        </button>
       </Header>
       <main>
-        {isLoading || errorMessage ? (
-          <p>Loading...</p>
-        ) : (
+        {isLoading ? (
+          <Message messageText="Loading..." />
+        ) : errorMessage ? (
+          <Message messageText={errorMessage}>
+            <button onClick={() => setErrorMessage("")}>Back To Form</button>
+          </Message>
+        ) : orderCreatedSuccess ? (
+          <Message messageText="Order created successfully!" />
+        ) : totalPrice > 0 ? (
           <>
             <UserForm
               onSubmit={handleSubmit}
@@ -101,6 +120,8 @@ export const CheckoutPage: FC = () => {
             />
             <p>Total Price: {totalPrice}</p>
           </>
+        ) : (
+          <Message messageText="Your cart is empty." />
         )}
       </main>
     </>

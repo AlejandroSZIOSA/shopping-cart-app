@@ -1,12 +1,12 @@
 import { type FC } from "react";
-import { type Product } from "../../types/shared";
+import { type ProductCtx } from "../../types/shared";
 import { Link } from "react-router-dom";
 import { useCartContext } from "../hooks/useCartContext";
-import type { ProductPayload } from "../../services/API.types";
+import type { Product } from "../../services/API.types";
 
 interface CardProps {
-  product: ProductPayload;
-  onAdd: (product: Product) => void;
+  product: Product;
+  onAdd: (product: ProductCtx) => void;
 }
 
 export const ProductCard: FC<CardProps> = ({ product, onAdd }) => {
@@ -17,11 +17,11 @@ export const ProductCard: FC<CardProps> = ({ product, onAdd }) => {
   const itemInCart = cart_?.find((item) => item.id === id);
 
   //create a new product object to add to cart
-  const newProductInCart: Product = {
+  const newProductInCart: ProductCtx = {
     id: product.id,
     name: product.name,
     price: product.price,
-    qty: 0,
+    qty: 1,
     item_total: product.price,
   };
 

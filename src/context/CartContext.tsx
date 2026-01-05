@@ -6,6 +6,7 @@ export interface CartContextType {
   addProduct_Fn: (p: ProductCtx) => void;
   removeProduct_Fn: (id: number) => void;
   updateProduct_Fn: (id: number, updatedProduct: ProductCtx) => void;
+  clearCart_Fn: () => void;
 }
 
 //2-Context

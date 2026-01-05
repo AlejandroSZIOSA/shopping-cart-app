@@ -16,7 +16,12 @@ type UPDATE_PRODUCT = {
     updatedProduct: ProductCtx;
   };
 };
-type Action = ADD_PRODUCT | REMOVE_PRODUCT | UPDATE_PRODUCT; // discriminant onion
+
+type CLEAR_CART = {
+  type: "CLEAR_CART";
+};
+
+type Action = ADD_PRODUCT | REMOVE_PRODUCT | UPDATE_PRODUCT | CLEAR_CART; // discriminant onion
 
 //1-Context Reducers
 export function cartReducer(
@@ -36,6 +41,8 @@ export function cartReducer(
               : p
           )
         : [];
+    case "CLEAR_CART":
+      return [];
     default:
       return state || [];
   }

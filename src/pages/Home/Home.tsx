@@ -6,38 +6,21 @@ import { CartShowing } from "../../components/CartShowing/CartShowing";
 import { List } from "../../components/List/List";
 
 import * as ProductsAPI from "../../services/API";
-
 import type { Product } from "../../services/API.types";
-
-const API_KEY = import.meta.env.VITE_API_KEY;
-
-/* type ProductsPayload = Pick<Product, "id" | "name" | "price">[]; */
 
 export const HomePage: FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-
   const { cart_, addProduct_Fn } = useCartContext();
-
   const [openCart, setOpenCart] = useState(false);
 
   const getProducts = async () => {
-    // reset initial state
-    /*  setIsLoading(true); */
-
     const dataRes = await ProductsAPI.getProducts();
-    /* setIsLoading(false); */
-
-    /*     console.log(data.data);
-     */ setProducts(dataRes.data as Product[]);
+    setProducts(dataRes.data);
   };
 
   useEffect(() => {
     getProducts();
   }, []);
-
-  /* console.log(API_KEY);
-  console.log(VITE_BASE_URL); */
 
   const handleAddToCart = (product: ProductCtx) => {
     product.qty = 1;
@@ -45,7 +28,6 @@ export const HomePage: FC = () => {
     addProduct_Fn(product);
   };
 
-  /* console.log(cart_); */
   return (
     <>
       <Header subText={openCart ? "Your Cart" : "Product List"}>

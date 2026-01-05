@@ -12,16 +12,15 @@ export const DetailsPage: FC = () => {
   const { id } = useParams<{ id: string }>();
   let numericId = Number(id);
 
-  const getProductDetails = async (id: number) => {
-    const res = await ProductsAPI.getProduct(id);
-    setProduct(res.data as Product);
-  };
-
   useEffect(() => {
     getProductDetails(numericId);
   }, []);
 
-  console.log(product);
+  const getProductDetails = async (id: number) => {
+    const res = await ProductsAPI.getProductDetails(id);
+    setProduct(res.data);
+  };
+
   return (
     <>
       <Header subText="Details">
@@ -31,7 +30,7 @@ export const DetailsPage: FC = () => {
         {product && (
           <>
             <p>name:{product.name}</p>
-            <p>name:{product.price}</p>
+            <p>price: {product.price}</p>
             <div>{parse(product.description as string)}</div>
           </>
         )}

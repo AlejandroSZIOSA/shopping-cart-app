@@ -24,6 +24,9 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
         payload: { id, updatedProduct },
       });
     },
+    clearCart_Fn() {
+      dispatch({ type: "CLEAR_CART" });
+    },
   };
 
   return <CartContext.Provider value={ctx}>{children}</CartContext.Provider>;
