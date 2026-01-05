@@ -8,7 +8,10 @@ import type { FormValues, Errors } from "../../types/shared";
 import { validate } from "../../utils/calculations";
 
 import * as TodosAPI from "../../services/API";
-import type { UserOrderPayload } from "../../services/API.types";
+import type {
+  ProductOrderPayload,
+  UserOrderPayload,
+} from "../../services/API.types";
 import { Message } from "../../components/Message/Message";
 
 export const CheckoutPage: FC = () => {
@@ -43,7 +46,12 @@ export const CheckoutPage: FC = () => {
     const validationErrors = validate(values);
     setErrors(validationErrors);
 
-    if (Object.keys(validationErrors).length === 0) {
+    //guards
+    if (
+      Object.keys(validationErrors).length === 0 &&
+      cart_ &&
+      cart_.length > 0
+    ) {
       console.log("Valid form");
       handleCreateOrder(createOrderData(values));
     }
@@ -59,14 +67,13 @@ export const CheckoutPage: FC = () => {
       customer_email: orderUserValues.email,
       customer_phone: orderUserValues.phone,
       order_total: totalPrice,
-      order_items:
-        cart_?.map((item) => ({
-          product_id: item.id,
-          name: item.name,
-          item_price: item.price,
-          qty: item.qty ?? 0,
-          item_total: item.item_total ?? 0,
-        })) || [],
+      order_items: cart_?.map((item) => ({
+        product_id: item.id,
+        name: item.name,
+        qty: item.qty,
+        item_price: item.price,
+        item_total: item.item_total,
+      })) as ProductOrderPayload[],
     };
     return newOrder;
   };
@@ -83,7 +90,7 @@ export const CheckoutPage: FC = () => {
     }
     setIsLoading(false);
     setOrderCreatedSuccess(true);
-    console.log(res);
+    /* console.log(res); */
     console.log("Order created successfully:", newOrder);
   };
 
@@ -92,8 +99,8 @@ export const CheckoutPage: FC = () => {
       <Header subText="Checkout">
         <button
           onClick={() => {
-            {
-              orderCreatedSuccess && clearCart_Fn();
+            if (orderCreatedSuccess) {
+              clearCart_Fn();
             }
             navigate("..");
           }}

@@ -10,16 +10,16 @@ export const DetailsPage: FC = () => {
   const [product, setProduct] = useState<Product | null>(null);
 
   const { id } = useParams<{ id: string }>();
-  let numericId = Number(id);
+  const numericId = Number(id);
 
   useEffect(() => {
-    getProductDetails(numericId);
-  }, []);
+    const getProductDetails = async (id: number) => {
+      const res = await ProductsAPI.getProductDetails(id);
+      setProduct(res.data);
+    };
 
-  const getProductDetails = async (id: number) => {
-    const res = await ProductsAPI.getProductDetails(id);
-    setProduct(res.data);
-  };
+    getProductDetails(numericId);
+  }, [numericId]);
 
   return (
     <>

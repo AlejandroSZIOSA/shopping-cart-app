@@ -9,6 +9,7 @@ export interface Product extends Pick<ProductCtx, "id" | "name" | "price"> {
 export interface ProductOrderPayload {
   product_id: number;
   name: string;
+  qty: number;
   item_price: number;
   item_total: number;
 }

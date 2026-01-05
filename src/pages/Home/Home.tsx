@@ -13,12 +13,11 @@ export const HomePage: FC = () => {
   const { cart_, addProduct_Fn } = useCartContext();
   const [openCart, setOpenCart] = useState(false);
 
-  const getProducts = async () => {
-    const dataRes = await ProductsAPI.getProducts();
-    setProducts(dataRes.data);
-  };
-
   useEffect(() => {
+    const getProducts = async () => {
+      const res = await ProductsAPI.getProducts();
+      setProducts(res.data);
+    };
     getProducts();
   }, []);
 
