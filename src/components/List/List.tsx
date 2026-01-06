@@ -5,7 +5,7 @@ import { ProductInCart } from "../ProductInCart/ProductInCart";
 import { Message } from "../Message/Message";
 import type { Product } from "../../services/API.types";
 
-//TODO: fix empty list
+import styles from "./List.module.css";
 
 interface ListProps {
   list: Product[] | ProductCtx[];
@@ -21,8 +21,8 @@ export const List: FC<ListProps> = ({ list, onAdd, onRemove, variant }) => {
       {!list || list.length === 0 ? (
         <Message messageText="Empty List" />
       ) : (
-        <ol>
-          {list?.map((item) => (
+        <ol className={styles.listContainer}>
+          {list.map((item) => (
             <li key={item.id}>
               {variant === "show-stack-items" ? (
                 // If onAdd is null or undefined, it uses the fallback.

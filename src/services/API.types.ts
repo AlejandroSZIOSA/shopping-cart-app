@@ -2,10 +2,10 @@ import type { ProductCtx } from "../types/shared";
 
 export interface Product extends Pick<ProductCtx, "id" | "name" | "price"> {
   description?: string;
-  images?: string[];
+  images: { thumbnail: string; large: string };
 }
 
-// types for orders
+// types for requests payloads
 export interface ProductOrderPayload {
   product_id: number;
   name: string;
@@ -26,11 +26,7 @@ export interface UserOrderPayload {
   order_items: ProductOrderPayload[];
 }
 
-/* export type CreateTodoPayload = Omit<Product, "id">;
-export type UpdateTodoPayload = Partial<CreateTodoPayload>; */
-
 //response types
-
 export type ResponseData<T> = {
   status: string;
   message?: string;

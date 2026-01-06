@@ -23,7 +23,7 @@ export const CartShowing: FC<CartShowingProps> = ({ onClose }) => {
     <div>
       {cart_ === undefined || cart_?.length === 0 ? (
         <>
-          <Message messageText="Empty Cart List">
+          <Message messageText="Empty Cart">
             <button onClick={onClose}>Back</button>
           </Message>
         </>

@@ -4,19 +4,27 @@ import { Header } from "../../components/Header/Header";
 import { useCartContext } from "../../components/hooks/useCartContext";
 import { CartShowing } from "../../components/CartShowing/CartShowing";
 import { List } from "../../components/List/List";
+import { Message } from "../../components/Message/Message";
 
 import * as ProductsAPI from "../../services/API";
 import type { Product } from "../../services/API.types";
 
 export const HomePage: FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const { cart_, addProduct_Fn } = useCartContext();
   const [openCart, setOpenCart] = useState(false);
 
   useEffect(() => {
     const getProducts = async () => {
+      setIsLoading(true);
       const res = await ProductsAPI.getProducts();
-      setProducts(res.data);
+      const { data } = res;
+      //guard for data
+      if (data) {
+        setProducts(data);
+      }
+      setIsLoading(false);
     };
     getProducts();
   }, []);
@@ -39,11 +47,15 @@ export const HomePage: FC = () => {
           <CartShowing onClose={() => setOpenCart(false)} />
         ) : (
           <div>
-            <List
-              list={products}
-              variant="show-stack-items"
-              onAdd={handleAddToCart}
-            />
+            {isLoading ? (
+              <Message messageText="Loading" />
+            ) : (
+              <List
+                list={products}
+                variant="show-stack-items"
+                onAdd={handleAddToCart}
+              />
+            )}
           </div>
         )}
       </main>

@@ -3,6 +3,9 @@ import { type ProductCtx } from "../../types/shared";
 import { Link } from "react-router-dom";
 import { useCartContext } from "../hooks/useCartContext";
 import type { Product } from "../../services/API.types";
+import { BASE_IMAGE_URL } from "../../utils/constants";
+
+import styles from "./ProductCard.module.css";
 
 interface CardProps {
   product: Product;
@@ -10,7 +13,9 @@ interface CardProps {
 }
 
 export const ProductCard: FC<CardProps> = ({ product, onAdd }) => {
-  const { id, name, price } = product;
+  const { id, name, price, images } = product;
+  const { thumbnail } = images;
+
   const { cart_ } = useCartContext();
 
   // Check if the item is already in the cart
@@ -25,17 +30,25 @@ export const ProductCard: FC<CardProps> = ({ product, onAdd }) => {
     item_total: product.price,
   };
 
+  /*   console.log(thumbnail); */
   return (
-    <div>
-      <p>{name}</p>
-      <p>price = {price}</p>
-      <Link to={`/details/${id}`}>Details</Link>
-      <button
-        disabled={itemInCart ? true : false}
-        onClick={() => onAdd(newProductInCart)}
-      >
-        Add to Cart
-      </button>
+    <div className={styles.cardContainer}>
+      <img src={BASE_IMAGE_URL + thumbnail} alt={name} />
+      <p>
+        <strong>{name}</strong>
+      </p>
+      <div className={styles.cardInnerContainer}>
+        <Link to={`/details/${id}`}>Details</Link>
+        <p>price = {price} KR</p>
+        <div>
+          <button
+            disabled={itemInCart ? true : false}
+            onClick={() => onAdd(newProductInCart)}
+          >
+            Add to Cart
+          </button>
+        </div>
+      </div>
     </div>
   );
 };

@@ -5,17 +5,25 @@ import parse from "html-react-parser";
 
 import * as ProductsAPI from "../../services/API";
 import type { Product } from "../../services/API.types";
+import { Message } from "../../components/Message/Message";
 
 export const DetailsPage: FC = () => {
   const [product, setProduct] = useState<Product | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const { id } = useParams<{ id: string }>();
   const numericId = Number(id);
 
   useEffect(() => {
     const getProductDetails = async (id: number) => {
+      setIsLoading(true);
       const res = await ProductsAPI.getProductDetails(id);
-      setProduct(res.data);
+      const { data } = res;
+      //guard for data
+      if (data) {
+        setProduct(data);
+      }
+      setIsLoading(false);
     };
 
     getProductDetails(numericId);
@@ -27,12 +35,16 @@ export const DetailsPage: FC = () => {
         <Link to="/"> Go Back</Link>
       </Header>
       <main>
-        {product && (
+        {isLoading ? (
+          <Message messageText="Loading" />
+        ) : product ? (
           <>
             <p>name:{product.name}</p>
             <p>price: {product.price}</p>
             <div>{parse(product.description as string)}</div>
           </>
+        ) : (
+          <Message messageText="Something Went Wrong" />
         )}
       </main>
     </>

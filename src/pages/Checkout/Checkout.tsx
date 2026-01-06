@@ -96,12 +96,10 @@ export const CheckoutPage: FC = () => {
         const errorsToMessage = Object.values(normalizedErrors).join("\n");
         alert(errorsToMessage);
       }
-
       return;
     }
     setIsLoading(false);
     setOrderCreatedSuccess(true);
-    console.log("Order created successfully:", newOrder);
   };
 
   return (
@@ -120,7 +118,7 @@ export const CheckoutPage: FC = () => {
       </Header>
       <main>
         {isLoading ? (
-          <Message messageText="Loading..." />
+          <Message messageText="Sending order..." />
         ) : errorMessage ? (
           <Message messageText={errorMessage}>
             <button onClick={() => setErrorMessage("")}>Back To Form</button>
