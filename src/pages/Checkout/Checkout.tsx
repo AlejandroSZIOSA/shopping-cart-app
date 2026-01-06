@@ -3,6 +3,7 @@ import { Header } from "../../components/Header/Header";
 import { useNavigate } from "react-router-dom";
 import { useCartContext } from "../../components/hooks/useCartContext";
 import { UserForm } from "../../components/UserForm/UserForm";
+import { Message } from "../../components/Message/Message";
 
 import type { FormValues, Errors } from "../../types/shared";
 import { validate } from "../../utils/calculations";
@@ -12,7 +13,6 @@ import type {
   ProductOrderPayload,
   UserOrderPayload,
 } from "../../services/API.types";
-import { Message } from "../../components/Message/Message";
 
 export const CheckoutPage: FC = () => {
   const navigate = useNavigate();
@@ -27,6 +27,7 @@ export const CheckoutPage: FC = () => {
     email: "",
     phone: "",
   });
+
   const [errors, setErrors] = useState<Errors>({});
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>("");
@@ -46,13 +47,12 @@ export const CheckoutPage: FC = () => {
     const validationErrors = validate(values);
     setErrors(validationErrors);
 
-    //guards
+    //guards for validation forms and empty cart
     if (
       Object.keys(validationErrors).length === 0 &&
       cart_ &&
       cart_.length > 0
     ) {
-      console.log("Valid form");
       handleCreateOrder(createOrderData(values));
     }
   };
@@ -81,16 +81,26 @@ export const CheckoutPage: FC = () => {
   const handleCreateOrder = async (newOrder: UserOrderPayload) => {
     setIsLoading(true);
     const res = await TodosAPI.createOrder(newOrder);
-    if (res.status === "fail") {
+    const { status, message, data } = res;
+
+    //Fail Validations
+    if (status === "fail") {
       setIsLoading(false);
-      setErrorMessage(
-        res.message || "Failed to create order. Please try again."
-      );
+      setErrorMessage(message || "Failed to create order. Please try again.");
+
+      //guards data errors
+      if (data) {
+        const normalizedErrors = Object.fromEntries(
+          Object.entries(data || {}).map(([key, value]) => [key, value[0]])
+        );
+        const errorsToMessage = Object.values(normalizedErrors).join("\n");
+        alert(errorsToMessage);
+      }
+
       return;
     }
     setIsLoading(false);
     setOrderCreatedSuccess(true);
-    /* console.log(res); */
     console.log("Order created successfully:", newOrder);
   };
 

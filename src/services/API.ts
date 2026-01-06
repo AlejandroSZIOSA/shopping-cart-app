@@ -1,11 +1,11 @@
 import axios from "axios";
 
 import { VITE_BASE_URL } from "../utils/constants";
-import {
-  type ErrorResponse,
-  type ProductDetailsResponse,
-  type ProductsResponse,
-  type UserOrderPayload,
+import type {
+  CreateOrderResponse,
+  ProductDetailsResponse,
+  ProductsResponse,
+  UserOrderPayload,
 } from "./API.types";
 
 const USER = import.meta.env.VITE_API_KEY;
@@ -48,5 +48,8 @@ export const getProductDetails = async (id: number) => {
 };
 
 export const createOrder = async (payload: UserOrderPayload) => {
-  return post<ErrorResponse, UserOrderPayload>(`users/${USER}/orders`, payload);
+  return post<CreateOrderResponse, UserOrderPayload>(
+    `users/${USER}/orders`,
+    payload
+  );
 };

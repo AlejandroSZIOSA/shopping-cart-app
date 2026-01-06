@@ -34,10 +34,14 @@ export type UpdateTodoPayload = Partial<CreateTodoPayload>; */
 export type ResponseData<T> = {
   status: string;
   message?: string;
-  data: T;
+  data?: T;
+};
+
+export type ErrorMessage = {
+  [key: string]: string[];
 };
 
 export type ProductsResponse = ResponseData<Product[]>;
 export type ProductDetailsResponse = ResponseData<Product>;
-export type CreateOrderResponse = ResponseData<UserOrderPayload>;
-export type ErrorResponse = ResponseData<unknown>;
+
+export type CreateOrderResponse = ResponseData<UserOrderPayload | ErrorMessage>;

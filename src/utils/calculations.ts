@@ -1,6 +1,6 @@
 import type { FormValues, Errors } from "../types/shared";
 
-//validation function for user form
+//validation functions for user form
 const fields: (keyof FormValues)[] = [
   "name",
   "lastName",
