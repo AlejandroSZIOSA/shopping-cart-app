@@ -19,23 +19,9 @@ const instance = axios.create({
   timeout: 10000, // 10 seconds
 });
 
-// generic HTTP GET request
+// Make a generic HTTP GET request
 export const get = async <T>(endpoint: string) => {
   const response = await instance.get<T>(endpoint);
-  return response.data;
-};
-
-/**
- * Make a generic HTTP POST request
- *
- * @param endpoint Endpoint to POST to
- * @param data Payload to POST
- */
-export const post = async <Response, Payload>(
-  endpoint: string,
-  data: Payload
-) => {
-  const response = await instance.post<Response>(endpoint, data);
   return response.data;
 };
 
@@ -45,6 +31,15 @@ export const getProducts = async () => {
 
 export const getProductDetails = async (id: number) => {
   return get<ProductDetailsResponse>("/products/" + id);
+};
+
+// Make a generic HTTP POST request
+export const post = async <Response, Payload>(
+  endpoint: string,
+  data: Payload
+) => {
+  const response = await instance.post<Response>(endpoint, data);
+  return response.data;
 };
 
 export const createOrder = async (payload: UserOrderPayload) => {

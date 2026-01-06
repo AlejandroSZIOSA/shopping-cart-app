@@ -43,5 +43,4 @@ export type ErrorMessage = {
 
 export type ProductsResponse = ResponseData<Product[]>;
 export type ProductDetailsResponse = ResponseData<Product>;
-
 export type CreateOrderResponse = ResponseData<UserOrderPayload | ErrorMessage>;

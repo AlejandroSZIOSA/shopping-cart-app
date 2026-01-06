@@ -88,7 +88,7 @@ export const CheckoutPage: FC = () => {
       setIsLoading(false);
       setErrorMessage(message || "Failed to create order. Please try again.");
 
-      //guards data errors
+      //guards data message errors
       if (data) {
         const normalizedErrors = Object.fromEntries(
           Object.entries(data || {}).map(([key, value]) => [key, value[0]])
