@@ -9,6 +9,8 @@ import { Message } from "../../components/Message/Message";
 import * as ProductsAPI from "../../services/API";
 import type { Product } from "../../services/API.types";
 
+import styles from "./Home.module.css";
+
 export const HomePage: FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -46,13 +48,13 @@ export const HomePage: FC = () => {
         {openCart ? (
           <CartShowing onClose={() => setOpenCart(false)} />
         ) : (
-          <div>
+          <div className={styles.stockListContainer}>
             {isLoading ? (
               <Message messageText="Loading" />
             ) : (
               <List
                 list={products}
-                variant="show-stack-items"
+                variant="show-stack-products"
                 onAdd={handleAddToCart}
               />
             )}

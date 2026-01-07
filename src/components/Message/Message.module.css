@@ -1,0 +1,9 @@
+.messageRootContainer {
+  display: block;
+  text-align: center;
+  margin-top: 35vh;
+}
+
+.messageRootContainer h2 {
+  padding: 1rem;
+}

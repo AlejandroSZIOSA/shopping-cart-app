@@ -1,0 +1,7 @@
+.stockListContainer {
+  display: flex;
+  width: max-content;
+  /* flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center; */
+}

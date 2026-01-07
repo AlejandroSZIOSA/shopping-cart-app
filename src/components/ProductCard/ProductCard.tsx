@@ -6,6 +6,7 @@ import type { Product } from "../../services/API.types";
 import { BASE_IMAGE_URL } from "../../utils/constants";
 
 import styles from "./ProductCard.module.css";
+import { CustomBtn } from "../UI/CustomBtn/CustomBtn";
 
 interface CardProps {
   product: Product;
@@ -41,12 +42,14 @@ export const ProductCard: FC<CardProps> = ({ product, onAdd }) => {
         <Link to={`/details/${id}`}>Details</Link>
         <p>price = {price} KR</p>
         <div>
-          <button
-            disabled={itemInCart ? true : false}
+          <CustomBtn
+            variant="primary"
+            color="blue"
+            isDisabled={itemInCart ? true : false}
             onClick={() => onAdd(newProductInCart)}
           >
             Add to Cart
-          </button>
+          </CustomBtn>
         </div>
       </div>
     </div>
