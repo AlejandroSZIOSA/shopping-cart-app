@@ -27,13 +27,13 @@ export interface UserOrderPayload {
 }
 
 //response types
-export type ResponseData<T> = {
+type ResponseData<T> = {
   status: string;
   message?: string;
   data?: T;
 };
 
-export type ErrorMessage = {
+type ErrorMessage = {
   [key: string]: string[];
 };
 
