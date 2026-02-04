@@ -11,6 +11,7 @@ const fields: (keyof FormValues)[] = [
   "phone",
 ];
 
+//validation functions for user form
 export const validate = (values: FormValues): Errors =>
   fields.reduce((errors, field) => {
     if (field === "phone") {

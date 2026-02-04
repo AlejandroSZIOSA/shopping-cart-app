@@ -1,15 +1,21 @@
 import { type FC } from "react";
 import type { ProductCtx } from "../../types/shared";
 import { useCartContext } from "../hooks/useCartContext";
+import { GlobalBtn } from "../buttons/GlobalBtn/GlobalBtn";
 
 import styles from "./ItemInCart.module.css";
 
 interface ItemCartProps {
   product: ProductCtx;
+  variant?: "aside-cart-item";
   onRemove: (id: number) => void; //props drilling back to home X2
 }
 
-export const ItemInCart: FC<ItemCartProps> = ({ product, onRemove }) => {
+export const ItemInCart: FC<ItemCartProps> = ({
+  variant,
+  product,
+  onRemove,
+}) => {
   const { id, name, price, qty } = product;
   const { updateProduct_Fn } = useCartContext();
 
@@ -38,16 +44,41 @@ export const ItemInCart: FC<ItemCartProps> = ({ product, onRemove }) => {
   };
 
   return (
-    <div className={styles.itemInCartContainer}>
-      <div className={styles.itemInCartInnerContainer}>
-        <p>{name}</p>
-        <div>
-          <button onClick={onDecreaseQty}> - </button>
-          <p>{qty}</p>
-          <button onClick={onIncreaseQty}> + </button>
+    <div
+      className={
+        variant === "aside-cart-item"
+          ? `${styles.itemInCartContainer} ${styles.itemInCartContainerAside}`
+          : styles.itemInCartContainer
+      }
+    >
+      <p>{name}</p>
+      {variant === "aside-cart-item" && (
+        <span>
+          <strong>${price}</strong>
+        </span>
+      )}
+      <div
+        className={
+          variant === "aside-cart-item"
+            ? `${styles.itemInCartInnerContainer} ${styles.itemInCartInnerContainerAside}`
+            : styles.itemInCartInnerContainer
+        }
+      >
+        {variant !== "aside-cart-item" && <span> ${price}</span>}
+        <div className={styles.quantityControlsButtonsContainer}>
+          <GlobalBtn onClick={onDecreaseQty} variant="secondary" color="black">
+            -
+          </GlobalBtn>
+          <p style={{ padding: "0 4px" }}>{qty}</p>
+          <GlobalBtn onClick={onIncreaseQty} variant="secondary" color="black">
+            +
+          </GlobalBtn>
         </div>
+
+        <GlobalBtn onClick={() => onRemove(id)} variant="secondary" color="red">
+          🗑
+        </GlobalBtn>
       </div>
-      <button onClick={() => onRemove(id)}> remove </button>
     </div>
   );
 };

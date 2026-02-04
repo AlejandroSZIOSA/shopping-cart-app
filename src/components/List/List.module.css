@@ -1,3 +1,27 @@
-.listContainer {
+.olProducts {
+  display: block;
   list-style-type: none;
+  margin-top: 0.6rem;
+}
+
+/* .olCartItems {
+  list-style-type: none;
+  margin-top: 0.6rem;
+} */
+
+@media (min-width: 540px) and (max-width: 1024px) {
+  .olProducts {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1040px) {
+  .olProducts {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+  }
+  /* .olCartItems {
+    margin-top: 1rem;
+  } */
 }

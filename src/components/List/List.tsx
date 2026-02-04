@@ -9,9 +9,9 @@ import styles from "./List.module.css";
 
 interface ListProps {
   list: Product[] | ProductCtx[];
+  variant: "show-stack-products" | "show-cart-items" | "show-aside-cart-items";
   onAdd?: (product: ProductCtx) => void;
   onRemove?: (id: number) => void; //props drilling back to home X2
-  variant: "show-stack-products" | "show-cart-items";
 }
 
 //Props drilling back to home
@@ -19,9 +19,15 @@ export const List: FC<ListProps> = ({ list, onAdd, onRemove, variant }) => {
   return (
     <>
       {!list || list.length === 0 ? (
-        <Message messageText="Empty List" />
+        <Message messageText="Empty List" variant="info" />
       ) : (
-        <ol className={styles.listContainer}>
+        <ol
+          className={
+            variant === "show-stack-products"
+              ? styles.olProducts
+              : styles.olCartItems
+          }
+        >
           {list.map((item) => (
             <li key={item.id}>
               {variant === "show-stack-products" ? (
@@ -30,8 +36,14 @@ export const List: FC<ListProps> = ({ list, onAdd, onRemove, variant }) => {
                   product={item as Product}
                   onAdd={onAdd ?? (() => {})}
                 />
+              ) : variant === "show-cart-items" ? (
+                <ItemInCart
+                  product={item as ProductCtx}
+                  onRemove={onRemove ?? (() => {})}
+                />
               ) : (
                 <ItemInCart
+                  variant="aside-cart-item"
                   product={item as ProductCtx}
                   onRemove={onRemove ?? (() => {})}
                 />

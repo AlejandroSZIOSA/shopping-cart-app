@@ -1,7 +1,6 @@
 .cardContainer {
   display: flex;
   flex-direction: column;
-  /* justify-content: center; */
   align-items: center;
   border: 1px solid #000000;
   border-radius: 8px;
@@ -23,7 +22,12 @@
   width: 100%;
   text-align: center;
 }
+.cardInnerContainer div {
+  margin-top: 8px;
+}
 
-/* .cardInnerContainer p {
-  text-align: right;
-} */
+@media (min-width: 1024px) {
+  .cardContainer {
+    width: fit-content;
+  }
+}

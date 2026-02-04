@@ -1,0 +1,10 @@
+.navigateCartContainer {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.6rem;
+  gap: 10px;
+}
+
+.subText {
+  padding-bottom: 0.5rem;
+}

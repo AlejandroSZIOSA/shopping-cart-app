@@ -4,9 +4,9 @@ import { Link } from "react-router-dom";
 import { useCartContext } from "../hooks/useCartContext";
 import type { Product } from "../../services/API.types";
 import { BASE_IMAGE_URL } from "../../utils/constants";
+import { GlobalBtn } from "../buttons/GlobalBtn/GlobalBtn";
 
 import styles from "./ProductCard.module.css";
-import { CustomBtn } from "../UI/CustomBtn/CustomBtn";
 
 interface CardProps {
   product: Product;
@@ -40,16 +40,18 @@ export const ProductCard: FC<CardProps> = ({ product, onAdd }) => {
       </p>
       <div className={styles.cardInnerContainer}>
         <Link to={`/details/${id}`}>Details</Link>
-        <p>price = {price} KR</p>
+        <p>
+          <strong>Price:</strong> ${price}
+        </p>
         <div>
-          <CustomBtn
+          <GlobalBtn
             variant="primary"
             color="blue"
             isDisabled={itemInCart ? true : false}
             onClick={() => onAdd(newProductInCart)}
           >
             Add to Cart
-          </CustomBtn>
+          </GlobalBtn>
         </div>
       </div>
     </div>

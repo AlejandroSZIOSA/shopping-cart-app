@@ -1,0 +1,83 @@
+.productDetailsSection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  padding: 10px;
+}
+.productDetailsSection div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.imageAndTitleContainer img {
+  width: 340px;
+  border-radius: 8px;
+}
+.priceTagDesktop {
+  display: none;
+}
+.imageAndTitleContainer h3 {
+  padding-bottom: 0.7rem;
+}
+.titleAndDescriptionContainer {
+  width: auto;
+}
+.productTitleDesktop {
+  display: none;
+}
+.descriptionContainer {
+  border: 2px solid black;
+  max-width: 600px;
+  text-align: center;
+}
+.descriptionContainer div {
+  padding: 0.2rem;
+}
+.priceTag {
+  padding: 0.5rem 0;
+}
+
+@media (min-width: 540px) and (max-width: 1024px) {
+  .productDetailsSection img {
+    width: 510px;
+  }
+  .descriptionContainer div {
+    padding: 0.4rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .productDetailsSection {
+    display: flex;
+    flex-direction: row;
+    align-items: initial;
+    margin-top: 2rem;
+    gap: 2rem;
+  }
+  .productTitle {
+    display: none;
+  }
+
+  .titleAndDescriptionContainer {
+    width: 600px;
+  }
+  .productTitleDesktop {
+    display: block;
+    padding-bottom: 1rem;
+  }
+  .productDetailsSection img {
+    width: 820px;
+    border-radius: 8px;
+  }
+  .priceTag {
+    display: none;
+  }
+  .priceTagDesktop {
+    display: block;
+    padding: 1.1rem;
+  }
+  .descriptionContainer div {
+    padding: 0.8rem;
+  }
+}

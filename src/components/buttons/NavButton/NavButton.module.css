@@ -1,0 +1,16 @@
+.navButton {
+  width: 50px;
+}
+
+.navButton img {
+  width: 50%;
+}
+
+@media (min-width: 1024px) {
+  .navButton {
+    width: 70px;
+  }
+  .navButton img {
+    width: 70%;
+  }
+}

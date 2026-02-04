@@ -16,7 +16,7 @@ const instance = axios.create({
   headers: {
     Accept: "application/json",
   },
-  timeout: 3000, // 3 seconds
+  timeout: 10000, // 10 seconds
 });
 
 // Make a generic HTTP GET request

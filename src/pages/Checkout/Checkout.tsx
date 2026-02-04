@@ -4,6 +4,10 @@ import { useNavigate } from "react-router-dom";
 import { useCartContext } from "../../components/hooks/useCartContext";
 import { UserForm } from "../../components/UserForm/UserForm";
 import { Message } from "../../components/Message/Message";
+import { NavButton } from "../../components/buttons/NavButton/NavButton";
+import { GlobalBtn } from "../../components/buttons/GlobalBtn/GlobalBtn";
+
+import styles from "./Checkout.module.css";
 
 import type { FormValues, Errors } from "../../types/shared";
 import { validate } from "../../utils/calculations";
@@ -31,8 +35,7 @@ export const CheckoutPage: FC = () => {
   const [errors, setErrors] = useState<Errors>({});
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>("");
-  const [orderCreatedSuccess, setOrderCreatedSuccess] =
-    useState<boolean>(false);
+  const [orderNumber, setOrderNumber] = useState<number>(0);
 
   const totalPrice =
     cart_?.reduce((acc, product) => acc + (product.item_total ?? 0), 0) ?? 0;
@@ -98,45 +101,67 @@ export const CheckoutPage: FC = () => {
       }
       return;
     }
-    setIsLoading(false);
-    setOrderCreatedSuccess(true);
+
+    //Error
+    if (status === "error") {
+      setIsLoading(false);
+      setErrorMessage("An error occurred. Please try again.");
+      return;
+    }
+
+    //Success
+    if (status === "success") {
+      setIsLoading(false);
+      setOrderNumber(typeof data?.id === "number" ? data.id : 0);
+    }
   };
 
   return (
     <>
       <Header subText="Checkout">
-        <button
+        <NavButton
+          srcImage="/src/assets/icons/home_24dp.svg"
           onClick={() => {
-            if (orderCreatedSuccess) {
+            if (orderNumber) {
               clearCart_Fn();
             }
             navigate("..");
           }}
-        >
-          Home
-        </button>
+        />
       </Header>
       <main>
         {isLoading ? (
-          <Message messageText="Sending order..." />
+          <Message messageText="Sending order..." variant="loading" />
         ) : errorMessage ? (
-          <Message messageText={errorMessage}>
-            <button onClick={() => setErrorMessage("")}>Back To Form</button>
+          <Message messageText={errorMessage} variant="error">
+            <GlobalBtn
+              style={{ marginBottom: "12px" }}
+              onClick={() => setErrorMessage("")}
+              variant="primary"
+              color="black"
+            >
+              Back To Form
+            </GlobalBtn>
           </Message>
-        ) : orderCreatedSuccess ? (
-          <Message messageText="Order created successfully!" />
+        ) : orderNumber ? (
+          <Message messageText="Order created successfully!" variant="success">
+            <p>Order Number: {orderNumber}</p>
+          </Message>
         ) : totalPrice > 0 ? (
-          <>
+          <div className={styles.checkoutContainer}>
+            <h3 className={styles.userInfo}>User Info</h3>
             <UserForm
               onSubmit={handleSubmit}
               onChange={handleChange}
               values={values}
               errors={errors}
             />
-            <p>Total Price: {totalPrice}</p>
-          </>
+            <p>
+              <strong>Total Price: ${totalPrice.toFixed(2)}</strong>
+            </p>
+          </div>
         ) : (
-          <Message messageText="Your cart is empty." />
+          <Message messageText="Your cart is empty." variant="info" />
         )}
       </main>
     </>

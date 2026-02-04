@@ -1,0 +1,24 @@
+.summarySection {
+  display: flex;
+  flex-direction: column;
+  width: fit-content;
+  align-items: center;
+  margin: 20px auto 20px auto;
+  background-color: lightgreen;
+  padding: 1rem;
+  border: 2px solid black;
+  border-radius: 10px;
+}
+
+.summaryButtonsContainer {
+  display: flex;
+  gap: 40px;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+@media (min-width: 540px) and (max-width: 1024px) {
+  .summaryButtonsContainer {
+    gap: 70px;
+  }
+}

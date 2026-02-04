@@ -1,4 +1,5 @@
-import { type ReactNode, type FC } from "react";
+import type { ReactNode, FC } from "react";
+import styles from "./Header.module.css";
 
 interface HeaderProps {
   children: ReactNode;
@@ -8,18 +9,11 @@ interface HeaderProps {
 export const Header: FC<HeaderProps> = ({ subText, children }) => {
   return (
     <header>
-      <div
-        style={{
-          display: "flex",
-          gap: "10px",
-          justifyContent: "space-evenly",
-          padding: "10px",
-        }}
-      >
-        <h1>Shopping Cart App</h1>
+      <div className={styles.navigateCartContainer}>
+        <h1>Shopping App</h1>
         {children}
       </div>
-      <h3>{subText}</h3>
+      <h2 className={styles.subText}>{subText}</h2>
     </header>
   );
 };

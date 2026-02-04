@@ -2,8 +2,32 @@
   display: block;
   text-align: center;
   margin-top: 35vh;
+  width: 100%;
 }
 
 .messageRootContainer h2 {
-  padding: 1rem;
+  padding: 0.8rem 0;
+}
+
+.info {
+  color: #000000;
+  font-weight: bold;
+}
+
+.error {
+  background-color: #9d0000;
+  color: #ffffff;
+  font-weight: bold;
+}
+
+.success {
+  background-color: #007015;
+  color: #ffffff;
+  font-weight: bold;
+}
+
+.loading {
+  background-color: #ffea00;
+  color: #000000;
+  font-weight: bold;
 }
